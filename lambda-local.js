@@ -74,12 +74,12 @@ if (!context) {
     };
     context.invokeId = context.awsRequestId;
 }
-context.succeed = function(message)
+context.succeed = function(output)
 {
-    if (Object.prototype.toString.call(message) === '[object Object]') message = JSON.stringify(message, null, 4);
-    console.log('MESSAGE');
+    if (Object.prototype.toString.call(output) === '[object Object]') output = JSON.stringify(output, null, 4);
+    console.log('OUTPUT');
     console.log('-'.repeat(32));
-    console.log(message);
+    console.log(output);
     process.exit();
 };
 context.fail = function(error)
