@@ -3,7 +3,7 @@
     "version"       : "1.0.1",
     "description"   : "Run AWS Lambda functions locally",
     "keywords"      : [ "AWS Lambda", "Local run" ],
-    "license"       : "SEE LICENSE IN LICENCE",
+    "license"       : "MIT",
     "author"        : "Max Kolodezniy <m.kolodezniy@gmail.com>",
     "contributors"  : [ "Max Kolodezniy <m.kolodezniy@gmail.com>" ],
     "bugs"          : {
