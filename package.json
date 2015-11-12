@@ -1,6 +1,6 @@
 {
     "name"          : "aws-lambda-local",
-    "version"       : "1.0.2",
+    "version"       : "1.0.3",
     "description"   : "Run AWS Lambda functions locally",
     "keywords"      : [ "AWS Lambda", "Local run" ],
     "license"       : "MIT",
@@ -10,7 +10,7 @@
         "email" : "m.kolodezniy@gmail.com"
     },
     "preferGlobal"  : true,
-    "main"          : "lambda-local",
+    "main"          : "./lambda-local.js",
     "engines"       : {
         "node"  : ">=5.0"
     },
@@ -19,6 +19,6 @@
         "url"   : "https://github.com/Max-Kolodezniy/aws-lambda-local.git"
     },
     "bin"           : {
-        "lambda-local"  : "./lambda-local"
+        "lambda-local"  : "./lambda-local.js"
     }
 }
