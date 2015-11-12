@@ -95,7 +95,7 @@ context.done = function(error, message)
     this.succeed(message);
 };
 
-const timeout = args.t || args.timeout || 3;
+const timeout = args.t || args.timeout || 30;
 setTimeout(function() {
     console.log('Lambda function ' + basename + ' was timed out after ' + timeout + ' seconds');
     process.exit(1);
