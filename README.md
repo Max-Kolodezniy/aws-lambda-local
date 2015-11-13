@@ -1,6 +1,9 @@
 # aws-lambda-local
 Run AWS Lambda function locally! The most lightweight library - no external dependencies. Only 100 lines of code.
 
+## Installation
+npm install -g aws-lambda-local
+
 ## Inputs
 ```
 -f functionName     | --function=functionName       required       Path to Lambda function main file
