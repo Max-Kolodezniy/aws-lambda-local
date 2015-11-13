@@ -24,10 +24,10 @@ exports.handler = function(event, context)
 
 $ cat event.json
 {
-    "obj" : { "a" : "b" },
+    "obj"   : { "a" : "b" },
     "int"   : 1,
     "str"   : "qwerty",
-    "arr"   : [1, 2, 3, 4]
+    "arr"   : [ 1, 2, 3, 4 ]
 }
 
 $ lambda-local -f function -e event.json -t 20
