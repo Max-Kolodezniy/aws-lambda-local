@@ -30,7 +30,7 @@ $ cat event.json
     "arr"   : [1, 2, 3, 4]
 }
 
-$ ./lambda-local.js -f function -e event.json -t 20
+$ lambda-local -f function -e event.json -t 20
 ERROR
 --------------------------------
 {
