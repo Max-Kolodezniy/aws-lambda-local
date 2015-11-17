@@ -55,6 +55,7 @@ const resolve = function(file) {
 // Resolve event object
 var event = args.e || args.event;
 if (typeof(event) !== 'undefined') event = resolve(event);
+if (!event) event = {};
 
 // if input argument Context exists - use it
 var context = args.c || args.context;
