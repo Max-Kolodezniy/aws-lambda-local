@@ -3,6 +3,13 @@
 
 var path = require('path');
 
+if (typeof(String.prototype.repeat) !== 'function') {
+    String.prototype.repeat = function( len )
+    {
+        return new Array( len + 1 ).join( this );
+    }
+}
+
 // Parse args
 var args = {};
 var raw = process.argv.slice(2);
