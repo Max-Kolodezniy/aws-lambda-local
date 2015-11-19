@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 'use strict';
 
-const path = require('path');
+var path = require('path');
 
 // Parse args
-const args = {};
-const raw = process.argv.slice(2);
+var args = {};
+var raw = process.argv.slice(2);
 for (var i = 0; i < raw.length; i++) {
     if (raw[i].substr(0, 2) === '--' && raw[i].indexOf('=') !== -1) {
         raw[i] = raw[i].split('=');
@@ -29,7 +29,7 @@ if (typeof(name) === 'undefined') {
     console.log('Invalid function name. It should be accessible from invocation place');
     process.exit(1);
 }
-const basename = path.basename(name);
+var basename = path.basename(name);
 
 // Function path recognition
 try {
@@ -40,7 +40,7 @@ try {
     process.exit(1);
 }
 
-const resolve = function(file) {
+var resolve = function(file) {
     try {
         if (file.substr(-5) !== '.json') file += '.json';
         file = path.resolve(file);
@@ -61,7 +61,7 @@ if (!event) event = {};
 var context = args.c || args.context;
 if (typeof(context) !== 'undefined') context = resolve(context);
 if (!context) {
-    const hash = Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+    var hash = Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
     context = {
         awsRequestId    : [
             hash.substr(0, 8), hash.substr(9, 4), hash.substr(12, 4), hash.substr(16, 4), hash.substr(20, 12)
@@ -96,7 +96,7 @@ context.done = function(error, message)
     this.succeed(message);
 };
 
-const timeout = args.t || args.timeout || 30;
+var timeout = args.t || args.timeout || 30;
 setTimeout(function() {
     console.log('Lambda function ' + basename + ' was timed out after ' + timeout + ' seconds');
     process.exit(1);
