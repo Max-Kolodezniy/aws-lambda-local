@@ -64,4 +64,4 @@ OUTPUT
 
 If you missed to call context.succeed()|fail()|done() function and your Lambda function runs forever - just use `timeout` option!
 
-Check out my [aws-lambda-build](https://www.npmjs.com/package/aws-lambda-build "aws-lambda-build") package!.
+Check out my [aws-lambda-build](https://www.npmjs.com/package/aws-lambda-build "https://github.com/Max-Kolodezniy/aws-lambda-build") package!.
