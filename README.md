@@ -1,6 +1,8 @@
 # aws-lambda-local
 Run AWS Lambda function locally! The most lightweight library - no external dependencies. Only 100 lines of code.
 
+Windows, Mac and Linux tested!
+
 ## Installation
 `npm install -g aws-lambda-local`
 
@@ -61,3 +63,5 @@ OUTPUT
 ```
 
 If you missed to call context.succeed()|fail()|done() function and your Lambda function runs forever - just use `timeout` option!
+
+Check out my [aws-lambda-build](https://www.npmjs.com/package/aws-lambda-build "aws-lambda-build") package!.
