@@ -82,25 +82,43 @@ if (!context) {
     };
     context.invokeId = context.awsRequestId;
 }
-context.succeed = function(output)
+context._dumpOutput = function(output)
 {
     if (Object.prototype.toString.call(output) === '[object Object]') output = JSON.stringify(output, null, 4);
     console.log('OUTPUT');
     console.log('-'.repeat(32));
     console.log(output);
+};
+context._dumpError = function(error)
+{
+    console.log('ERROR');
+    console.log('-'.repeat(32));
+    if (typeof (error.stack) !== 'undefined') {
+        console.log(error.stack);
+    } else if (typeof(error) === 'object') {
+        console.log(JSON.stringify(error, null, 4));
+    } else {
+        console.log(error);
+    }
+};
+context.done = function(error, message)
+{
+    if (error) {
+        this._dumpError(error);
+        console.log();
+    }
+    this._dumpOutput(message);
+    process.exit();
+};
+context.succeed = function(output)
+{
+    this._dumpOutput(output);
     process.exit();
 };
 context.fail = function(error)
 {
-    if (Object.prototype.toString.call(error) === '[object Object]') error = JSON.stringify(error, null, 4);
-    console.log('ERROR');
-    console.log('-'.repeat(32));
-    console.log(error);
-};
-context.done = function(error, message)
-{
-    if (error) this.fail(error);
-    this.succeed(message);
+    this._dumpError(error);
+    process.exit();
 };
 
 var timeout = args.t || args.timeout || 30;
