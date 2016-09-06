@@ -93,12 +93,18 @@ context._dumpError = function(error)
 {
     console.log('ERROR');
     console.log('-'.repeat(32));
-    if (typeof (error.stack) !== 'undefined') {
-        console.log(error.stack);
-    } else if (typeof(error) === 'object') {
-        console.log(JSON.stringify(error, null, 4));
+    if (typeof(error) === 'object') {
+        if (error.constructor.name == 'Error') {
+            console.log(JSON.stringify({
+                errorMessage : error.message ? error.message : 'null',
+                errorType    : error.constructor.name,
+                stackTrace   : error.stack
+            }, null, 4));
+        } else {
+            console.log(JSON.stringify(error, null, 4));
+        }
     } else {
-        console.log(error);
+        console.log(JSON.stringify({ errorMessage : error }, null, 4));
     }
 };
 context.done = function(error, message)
@@ -126,4 +132,18 @@ setTimeout(function() {
     console.log('Lambda function ' + basename + ' was timed out after ' + timeout + ' seconds');
     process.exit(1);
 }, timeout*1000);
-require(name).handler(event, context);
+
+if (parseInt((process.version.replace('v', '').replace(/\./g, '') + '00000').substring(0, 5)) >= 43000) {
+    var callbackCallFlag = false;
+    require(name).handler(event, context, function(error, output) {
+        if (callbackCallFlag) return;
+        if (typeof(error) !== 'undefined' && error !== null) {
+            context._dumpError(error);
+        }
+        if (typeof(output) === 'undefined') output = null;
+        context._dumpOutput(output);
+        callbackCallFlag = true;
+    });
+} else {
+    require(name).handler(event, context);
+}
