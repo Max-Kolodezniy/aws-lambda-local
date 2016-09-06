@@ -128,7 +128,7 @@ context.fail = function(error)
 };
 
 var timeout = args.t || args.timeout || 30;
-setTimeout(function() {
+var exitTimer = setTimeout(function() {
     console.log('Lambda function ' + basename + ' was timed out after ' + timeout + ' seconds');
     process.exit(1);
 }, timeout*1000);
@@ -147,3 +147,4 @@ if (parseInt((process.version.replace('v', '').replace(/\./g, '') + '00000').sub
 } else {
     require(name).handler(event, context);
 }
+exitTimer.unref();
