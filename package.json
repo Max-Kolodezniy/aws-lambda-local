@@ -1,6 +1,6 @@
 {
     "name"          : "aws-lambda-local",
-    "version"       : "1.0.12",
+    "version"       : "1.0.13",
     "description"   : "Run AWS Lambda functions locally! The most lightweight library - no external dependencies. Only 100 lines of code.",
     "keywords"      : [ "AWS Lambda", "Local run" ],
     "license"       : "MIT",

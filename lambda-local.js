@@ -133,9 +133,19 @@ var exitTimer = setTimeout(function() {
     process.exit(1);
 }, timeout*1000);
 
+var getHandler = function(filename) {
+    var exported = require(filename);
+    for (var property in exported) {
+        if (exported.hasOwnProperty(property) && typeof(exported[property]) === 'function') {
+            return exported[property];
+        }
+    }
+    process.exit();
+};
+
 if (parseInt((process.version.replace('v', '').replace(/\./g, '') + '00000').substring(0, 5)) >= 43000) {
     var callbackCallFlag = false;
-    require(name).handler(event, context, function(error, output) {
+    getHandler(name).call({}, event, context, function(error, output) {
         if (callbackCallFlag) return;
         if (typeof(error) !== 'undefined' && error !== null) {
             context._dumpError(error);
@@ -145,6 +155,6 @@ if (parseInt((process.version.replace('v', '').replace(/\./g, '') + '00000').sub
         callbackCallFlag = true;
     });
 } else {
-    require(name).handler(event, context);
+    getHandler(name).call({}, event, context);
 }
 exitTimer.unref();
