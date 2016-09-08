@@ -1,5 +1,5 @@
 # aws-lambda-local
-Run AWS Lambda function locally! The most lightweight library - no external dependencies. Only 100 lines of code.
+Run AWS Lambda function locally! The most lightweight library - no external dependencies. Less than 200 lines of code.
 
 Windows, Mac and Linux tested!
 
