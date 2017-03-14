@@ -71,7 +71,7 @@ if (!context) {
     var hash = (Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2)).substr(0, 32);
     context = {
         awsRequestId    : [
-            hash.substr(0, 8), hash.substr(9, 4), hash.substr(12, 4), hash.substr(16, 4), hash.substr(20, 12)
+            hash.substr(0, 8), hash.substr(8, 4), hash.substr(12, 4), hash.substr(16, 4), hash.substr(20, 12)
         ].join('-'),
         logGroupName    : '/aws/lambda/' + basename,
         logStreamName   : (new Date()).toISOString().substr(0, 10).replace(/-/g, '/') + '/[$LATEST]' + hash,
