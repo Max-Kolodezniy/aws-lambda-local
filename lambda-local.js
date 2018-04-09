@@ -143,7 +143,19 @@ var getHandler = function(filename) {
     process.exit();
 };
 
-if (parseInt((process.version.replace('v', '').replace(/\./g, '') + '00000').substring(0, 5)) >= 43000) {
+var asyncMode = args.a || args.async || false
+
+var nodeVersion = parseInt((process.version.replace('v', '').replace(/\./g, '') + '00000').substring(0, 5))
+if (nodeVersion >= 81000 && asyncMode) {
+    console.log("nodeVersion", nodeVersion)
+    getHandler(name).call({}, event, context)
+    .then((output) => {
+        context._dumpOutput(output)
+    })
+    .catch((error) => {
+        context._dumpError(error)
+    })
+} else if (nodeVersion >= 43000) {
     var callbackCallFlag = false;
     getHandler(name).call({}, event, context, function(error, output) {
         if (callbackCallFlag) return;
