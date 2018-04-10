@@ -135,6 +135,15 @@ var exitTimer = setTimeout(function() {
 
 var getHandler = function(filename) {
     var exported = require(filename);
+
+    if (args.n || args.name) {
+        var fName = args.n || args.name;
+        if (exported.hasOwnProperty(fName) && typeof(exported[fName]) === 'function') {
+            return exported[fName];
+        }
+        console.log('Cannot resolve given function ' + name + '.' + fName);
+        process.exit(1);
+    }
     for (var property in exported) {
         if (exported.hasOwnProperty(property) && typeof(exported[property]) === 'function') {
             return exported[property];
