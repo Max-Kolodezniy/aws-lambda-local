@@ -17,16 +17,17 @@ Windows, Mac and Linux tested!
 ```
 
 ## Usage
+
 Just specify `function name` (can be in nested directory), `event` object file.
 Optionally you also may replace default `context` object and `timeout` (30 seconds by default).
 ```
-$ cat function.js
+$ cat test/function.js
 exports.handler = function(event, context)
 {
     context.done(event, context);
 };
 
-$ cat event.json
+$ cat test/event.json
 {
     "obj"   : { "a" : "b" },
     "int"   : 1,
@@ -34,7 +35,7 @@ $ cat event.json
     "arr"   : [ 1, 2, 3, 4 ]
 }
 
-$ lambda-local -f function -e event.json -t 20
+$ lambda-local -f test/function -e test/event.json -t 20
 ERROR
 --------------------------------
 {
@@ -63,7 +64,47 @@ OUTPUT
     "invokeId": "wn26j4dm-m8zd-d7vi-j94j-50t4zsjlwhfr"
 }
 ```
-
 If you missed to call context.succeed()|fail()|done() function and your Lambda function runs forever - just use `timeout` option!
 
 Check out my [aws-lambda-build](https://www.npmjs.com/package/aws-lambda-build "https://github.com/Max-Kolodezniy/aws-lambda-build") package!
+
+### Node 8.10 async/await support
+
+AWS Lambda now supports Node 8.10 and async/await handler function ([AWS blog](https://aws.amazon.com/blogs/compute/node-js-8-10-runtime-now-available-in-aws-lambda/)). 
+```
+$ cat test/function.js
+exports.handler = async (event) => {
+  var ret = await delay(event.delay)
+  return { 
+    statusCode: 200,
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({ "delay": ret })
+  }
+}
+
+function delay(ms) {
+  return new Promise(function(resolve, reject) {
+    setTimeout(() => {
+      resolve(`Done waiting ${ms}ms`)
+    }, ms)
+  })
+}
+
+$ cat test/async.event.json
+{
+  "delay": 50
+}
+
+$ node lambda-local.js -f test/async -e test/async.event.json -a true
+OUTPUT
+--------------------------------
+{
+    "statusCode": 200,
+    "headers": {
+        "content-type": "application/json"
+    },
+    "body": "{\"delay\":\"Done waiting 50ms\"}"
+}
+```
