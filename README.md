@@ -13,6 +13,7 @@ Windows, Mac and Linux tested!
 -c contextPath      | --context=contextPath         optional       Path to .json file contains context object
 -t seconds          | --timeout=seconds             optional       Force quit Lambda function after XX seconds
 -n name             | --name=name                   optional       Property name for the exported Lambda function in main file
+-a {true,false}     | --async={true,false}          optional       Run the function async/await handler support (see test/async.js for an example)
 ```
 
 ## Usage
