@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 'use strict';
 
-var path = require('path');
+const path = require('path');
 
 if (typeof(String.prototype.repeat) !== 'function') {
-    String.prototype.repeat = function( len )
+    String.prototype.repeat = ( len ) =>
     {
         return new Array( len + 1 ).join( this );
     }
 }
 
 // Parse args
-var args = {};
-var raw = process.argv.slice(2);
-for (var i = 0; i < raw.length; i++) {
+let args = {};
+const raw = process.argv.slice(2);
+for (let i = 0; i < raw.length; i++) {
     if (raw[i].substr(0, 2) === '--' && raw[i].indexOf('=') !== -1) {
         raw[i] = raw[i].split('=');
         args[raw[i][0].replace('--', '')] = raw[i].slice(1).join('=');
@@ -31,12 +31,12 @@ for (var i = 0; i < raw.length; i++) {
 }
 
 // If there is no function - exit;
-var name = args.f || args.function;
+let name = args.f || args.function;
 if (typeof(name) === 'undefined') {
     console.log('Invalid function name. It should be accessible from invocation place');
     process.exit(1);
 }
-var basename = path.basename(name);
+const basename = path.basename(name);
 
 // Function path recognition
 try {
@@ -47,7 +47,7 @@ try {
     process.exit(1);
 }
 
-var resolve = function(file) {
+const resolve = (file) => {
     try {
         if (file.substr(-5) !== '.json') file += '.json';
         file = path.resolve(file);
@@ -60,15 +60,15 @@ var resolve = function(file) {
 };
 
 // Resolve event object
-var event = args.e || args.event;
+let event = args.e || args.event;
 if (typeof(event) !== 'undefined') event = resolve(event);
 if (!event) event = {};
 
 // if input argument Context exists - use it
-var context = args.c || args.context;
+let context = args.c || args.context;
 if (typeof(context) !== 'undefined') context = resolve(context);
 if (!context) {
-    var hash = (Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2)).substr(0, 32);
+    const hash = (Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2)).substr(0, 32);
     context = {
         awsRequestId    : [
             hash.substr(0, 8), hash.substr(8, 4), hash.substr(12, 4), hash.substr(16, 4), hash.substr(20, 12)
@@ -94,7 +94,7 @@ context._dumpError = function(error)
     console.log('ERROR');
     console.log('-'.repeat(32));
     if (typeof(error) === 'object') {
-        if (error.constructor.name == 'Error') {
+        if (error.constructor.name === 'Error') {
             console.log(JSON.stringify({
                 errorMessage : error.message ? error.message : 'null',
                 errorType    : error.constructor.name,
@@ -119,11 +119,13 @@ context.done = function(error, message)
 context.succeed = function(output)
 {
     this._dumpOutput(output);
+    exitTimer.unref();
     process.exit();
 };
 context.fail = function(error)
 {
     this._dumpError(error);
+    exitTimer.unref();
     process.exit();
 };
 
@@ -143,18 +145,11 @@ var getHandler = function(filename) {
     process.exit();
 };
 
-if (parseInt((process.version.replace('v', '').replace(/\./g, '') + '00000').substring(0, 5)) >= 43000) {
-    var callbackCallFlag = false;
-    getHandler(name).call({}, event, context, function(error, output) {
-        if (callbackCallFlag) return;
-        if (typeof(error) !== 'undefined' && error !== null) {
-            context._dumpError(error);
-        }
-        if (typeof(output) === 'undefined') output = null;
-        context._dumpOutput(output);
-        callbackCallFlag = true;
-    });
-} else {
-    getHandler(name).call({}, event, context);
-}
+getHandler(name).call({}, event, context, function(error, output) {
+    if (typeof(error) !== 'undefined' && error !== null) {
+        context._dumpError(error);
+    }
+    if (typeof(output) === 'undefined') output = null;
+    context._dumpOutput(output);
+});
 exitTimer.unref();
