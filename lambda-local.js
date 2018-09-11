@@ -137,6 +137,14 @@ var exitTimer = setTimeout(function() {
 
 var getHandler = function(filename) {
     var exported = require(filename);
+    if (args.h || args.handler) {
+        const handler = args.h || args.handler;
+        if (exported.hasOwnProperty(handler) && typeof(exported[handler]) === 'function') {
+            return exported[handler];
+        }
+        console.log('Cannot resolve given function ' + name + '.' + handler);
+        process.exit(1);
+    }
     for (var property in exported) {
         if (exported.hasOwnProperty(property) && typeof(exported[property]) === 'function') {
             return exported[property];
@@ -147,9 +155,9 @@ var getHandler = function(filename) {
 
 getHandler(name).call({}, event, context, function(error, output) {
     if (typeof(error) !== 'undefined' && error !== null) {
-        context._dumpError(error);
+        context.fail(error);
     }
     if (typeof(output) === 'undefined') output = null;
-    context._dumpOutput(output);
+    context.succeed(output);
 });
 exitTimer.unref();

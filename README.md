@@ -12,6 +12,7 @@ Windows, Mac and Linux tested!
 -e eventPath        | --event=eventPath             optional       Path to .json file contains event object
 -c contextPath      | --context=contextPath         optional       Path to .json file contains context object
 -t seconds          | --timeout=seconds             optional       Force quit Lambda function after XX seconds
+-h handler          | --handler=exports.handler     optional       Module.exports.handler name. Default is first function from the midule 
 ```
 
 ## Usage
