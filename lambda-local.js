@@ -153,11 +153,17 @@ var getHandler = function(filename) {
     process.exit();
 };
 
-getHandler(name).call({}, event, context, function(error, output) {
-    if (typeof(error) !== 'undefined' && error !== null) {
+const result = getHandler(name).call({}, event, context, function(error, output) {
+    if (typeof(error) !== 'undefined' && error !== null) {                      // Normal callback call
         context.fail(error);
     }
     if (typeof(output) === 'undefined') output = null;
     context.succeed(output);
 });
+if (typeof(result) !== 'undefined' && typeof(result.then) === 'function') {     // Promise returned or async function
+    result
+        .then((output) => { context.succeed(output) })
+        .catch((err) => { context.fail(err) })
+}
+
 exitTimer.unref();

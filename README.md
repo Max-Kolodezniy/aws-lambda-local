@@ -20,11 +20,39 @@ Just specify `function name` (can be in nested directory), `event` object file.
 Optionally you also may replace default `context` object and `timeout` (30 seconds by default).
 ```
 $ cat function.js
+
 exports.handler = function(event, context)
 {
     context.done(event, context);
+    // or
+    return new Promise((resolve, reject) => {})
 };
 
+Or
+
+exports.handler = function(event, context, callback)
+{
+    callback(null, dataToRetun);
+};
+
+Or
+
+exports.handler = function(event)
+{
+    return new Promise((resolve, reject) => {})
+};
+
+Or even
+
+exports.handler = async (event) =>
+{
+    return 'ret';
+}
+
+```
+
+Check the event object. You can create any set of input data (and use them for functional testing or something else)
+```
 $ cat event.json
 {
     "obj"   : { "a" : "b" },
