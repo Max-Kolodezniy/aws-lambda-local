@@ -126,7 +126,7 @@ context.fail = function(error)
 {
     this._dumpError(error);
     exitTimer.unref();
-    process.exit();
+    process.exit(1);
 };
 
 var timeout = args.t || args.timeout || 30;

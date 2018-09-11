@@ -90,6 +90,7 @@ OUTPUT
     "invokeId": "wn26j4dm-m8zd-d7vi-j94j-50t4zsjlwhfr"
 }
 ```
+CLI script will return non-zero exit code (1) in case of any failure. 
 
 If you missed to call context.succeed()|fail()|done() function and your Lambda function runs forever - just use `timeout` option!
 
