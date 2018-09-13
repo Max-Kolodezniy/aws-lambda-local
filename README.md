@@ -10,6 +10,7 @@ Windows, Mac and Linux tested!
 ```
 -f functionName     | --function=functionName       required       Path to Lambda function main file
 -e eventPath        | --event=eventPath             optional       Path to .json file contains event object
+-l event            | --linevent=jsonEvent          optional       Event object (takes precedence over -e/--event)
 -c contextPath      | --context=contextPath         optional       Path to .json file contains context object
 -t seconds          | --timeout=seconds             optional       Force quit Lambda function after XX seconds
 -h handler          | --handler=exports.handler     optional       Module.exports.handler name. Default is first function from the module 
@@ -89,6 +90,11 @@ OUTPUT
     "invokedFunctionArn": "arn:aws:lambda:aws-region:1234567890123:function:function",
     "invokeId": "wn26j4dm-m8zd-d7vi-j94j-50t4zsjlwhfr"
 }
+```
+
+Example passing event directly in command line. Make sure quotes are properly escaped
+```
+$ lambda-local -f function -l "{\"obj\": {\"a\": \"b\"}, \"int\": 1, \"str\": \"qwerty\", \"arr\": [1, 2, 3, 4]}"
 ```
 CLI script will return non-zero exit code (1) in case of any failure. 
 

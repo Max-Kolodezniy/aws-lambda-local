@@ -64,6 +64,19 @@ let event = args.e || args.event;
 if (typeof(event) !== 'undefined') event = resolve(event);
 if (!event) event = {};
 
+// Event from command line -l
+var lineEvent = args.l || args.linevent;
+if (typeof(lineEvent) !== 'undefined') {
+    try {
+        event = JSON.parse(lineEvent);
+    }
+    catch (e) {
+        console.log('Invalid event. ', e);
+        process.exit(1);
+    }
+}
+if (!event) event = {};
+
 // if input argument Context exists - use it
 let context = args.c || args.context;
 if (typeof(context) !== 'undefined') context = resolve(context);
