@@ -9,7 +9,7 @@ Windows, Mac and Linux tested!
 ## Inputs
 ```
 -f functionName     | --function=functionName       required       Path to Lambda function main file
--e eventPath        | --event=eventPath             optional       Path to .json file contains event object
+-e event            | --event=event                 optional       Either path to .json file contains event object or raw JSON data
 -c contextPath      | --context=contextPath         optional       Path to .json file contains context object
 -t seconds          | --timeout=seconds             optional       Force quit Lambda function after XX seconds
 -h handler          | --handler=exports.handler     optional       Module.exports.handler name. Default is first function from the module 
@@ -90,6 +90,15 @@ OUTPUT
     "invokeId": "wn26j4dm-m8zd-d7vi-j94j-50t4zsjlwhfr"
 }
 ```
+
+Other ways to pass the input event:
+```
+$ lambda-local -f function -e event.json
+$ lambda-local -f function -e '{"json":"here"}'
+$ cat event.json | lambda-local -f function
+$ echo '{"json":"here"}' | lambda-local -f function
+```
+
 CLI script will return non-zero exit code (1) in case of any failure. 
 
 If you missed to call context.succeed()|fail()|done() function and your Lambda function runs forever - just use `timeout` option!
