@@ -1,24 +1,38 @@
 {
-    "name"          : "aws-lambda-local",
-    "version"       : "2.0.6",
-    "description"   : "Run AWS Lambda functions locally! The most lightweight library - no external dependencies. Only 100 lines of code.",
-    "keywords"      : [ "AWS Lambda", "Local run" ],
-    "license"       : "MIT",
-    "author"        : "Max Kolodezniy <m.kolodezniy@gmail.com>",
-    "contributors"  : [ "Max Kolodezniy <m.kolodezniy@gmail.com>" ],
-    "bugs"          : {
-        "email" : "m.kolodezniy@gmail.com"
+    "name": "aws-lambda-local",
+    "version": "3.0.1",
+    "description": "Run AWS Lambda functions locally! The most lightweight library - no external dependencies.",
+    "keywords": [
+        "AWS Lambda",
+        "Local run"
+    ],
+    "license": "MIT",
+    "author": "Max Kolodezniy <m.kolodezniy@gmail.com>",
+    "contributors": [
+        "Max Kolodezniy <m.kolodezniy@gmail.com>"
+    ],
+    "bugs": {
+        "email": "m.kolodezniy@gmail.com"
     },
-    "preferGlobal"  : true,
-    "main"          : "./lambda-local.js",
-    "engines"       : {
-        "node"  : ">=4.3"
+    "preferGlobal": true,
+    "main": "./lambda-local.js",
+    "engines": {
+        "node": ">=8.0"
     },
-    "repository"    : {
-        "type"  : "git",
-        "url"   : "https://github.com/Max-Kolodezniy/aws-lambda-local.git"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Max-Kolodezniy/aws-lambda-local.git"
     },
-    "bin"           : {
-        "lambda-local"  : "./lambda-local.js"
-    }
+    "bin": {
+        "lambda-local": "./lambda-local.js"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "mocha": "^5.2.0",
+        "sinon": "^7.1.1"
+    },
+    "scripts": {
+        "test": "mocha --recursive"
+    },
+    "dependencies": {}
 }
